@@ -1,10 +1,17 @@
-import { useState } from 'react';
-import Cart from './components/Cart';
-import ProduceList from './components/ProduceList';
+import { useEffect, useState } from "react";
+import Cart from "./components/Cart";
+import ProduceList from "./components/ProduceList";
+import { useDispatch } from "react-redux";
+import { populateProduce } from "./store/produce";
 
 function App() {
+  const dispatch = useDispatch();
+
   const [showCart, setShowCart] = useState(false);
-  
+
+  useEffect(() => {
+    dispatch(populateProduce());
+  }, [dispatch]);
   return (
     <>
       <nav>
@@ -14,12 +21,12 @@ function App() {
           Checkout
         </button>
       </nav>
-      <main style={showCart ? { marginRight: '300px' } : {}} >
+      <main style={showCart ? { marginRight: "300px" } : {}}>
         <ProduceList />
       </main>
       <div
         className="sidebar"
-        style={showCart ? { transform: 'translateX(-100%)' } : {}}
+        style={showCart ? { transform: "translateX(-100%)" } : {}}
       >
         <div className="sidebar-header">
           <button className="arrow-button" onClick={() => setShowCart(false)}>
